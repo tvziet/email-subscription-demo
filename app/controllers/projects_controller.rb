@@ -3,21 +3,21 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects.order(created_at: :desc)
   end
 
   def show
   end
 
   def new
-    @project = Project.new
+    @project = current_user.projects.build
   end
 
   def edit
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = current_user.projects.build(project_params)
 
     respond_to do |format|
       if @project.save
