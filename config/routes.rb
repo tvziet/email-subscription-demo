@@ -10,5 +10,13 @@ Rails.application.routes.draw do
   end
 
   devise_for :users
-  root to: 'projects#index'
+  devise_scope :user do
+    authenticated :user do
+      root to: "projects#index"
+    end
+
+    unauthenticated do
+      root to: "home#index", as: :unauthenticated_root
+    end
+  end
 end
